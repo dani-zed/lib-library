@@ -14,6 +14,11 @@ app.use(express.json());
 pool.getConnection()
   .then(() => console.log("✅ MySQL connected"))
   .catch((err) => console.error("❌ MySQL connection failed:", err));
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`, req.body);
+  next();
+});
+
 
 app.use("/api/books", bookRoutes);
 
@@ -21,5 +26,5 @@ app.get("/", (req, res) => {
   res.send("📚 Library API running with SQL");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

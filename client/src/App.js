@@ -1,11 +1,13 @@
-import './App.css';
+// src/App.jsx
+import AppRoutes from "./routes/AppRoutes";
+import "./styles/global.css";
 
-function App() {
+const App = () => {
   return (
-   <div>
-    {/* MVC-model view controller */}
-    LibrarY</div>
+    <>
+      <AppRoutes />
+    </>
   );
-}
+};
 
 export default App;

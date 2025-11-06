@@ -1,31 +1,39 @@
-import { getAllBooks, insertBook, deleteBookById } from "../models/Book.js";
+import pool from "../config/db.js";
 
-// GET /api/books
+// Get all books
 export const getBooks = async (req, res) => {
   try {
-    const books = await getAllBooks();
-    res.json(books);
+    const [rows] = await pool.query("SELECT * FROM books ORDER BY id DESC");
+    res.json(rows);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// POST /api/books
+// Add a new book
 export const addBook = async (req, res) => {
   try {
-    const id = await insertBook(req.body);
-    res.status(201).json({ id, ...req.body });
+    const { title, author, year } = req.body;
+    if (!title) return res.status(400).json({ error: "Title is required" });
+
+    const [result] = await pool.query(
+      "INSERT INTO books (title, author, year) VALUES (?, ?, ?)",
+      [title, author, year]
+    );
+
+    res.json({ id: result.insertId, title, author, year });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
-// DELETE /api/books/:id
+// Delete a book
 export const deleteBook = async (req, res) => {
   try {
-    await deleteBookById(req.params.id);
-    res.json({ message: "Book deleted" });
+    const { id } = req.params;
+    await pool.query("DELETE FROM books WHERE id = ?", [id]);
+    res.json({ message: "Book deleted successfully" });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
