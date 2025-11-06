@@ -1,6 +1,6 @@
 import BookCard from "../components/bookCard";
 import { useEffect, useState } from "react";
-import { getBooksController } from "../controllers/bookController";
+import { getAllBooks } from "../controllers/bookController";
 const Library = () => {
   const [books, setBooks] = useState([]);
   
@@ -8,7 +8,7 @@ const Library = () => {
     setBooks([]);
     const fetchBooks = async () => {
       try {
-        const data = await getBooksController();
+        const data = await getAllBooks();
         console.log(data);
         
         setBooks(data);

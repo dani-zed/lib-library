@@ -9,6 +9,18 @@ export const getBooks = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+export const getBookById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await pool.query("SELECT * FROM books WHERE id = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 // Add a new book
 export const addBook = async (req, res) => {

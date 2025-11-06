@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 // src/components/BookCard.jsx
 const BookCard = ({ book }) => (
+  <Link to={`/book/${book.id}`} style={{ textDecoration: "none", color: "inherit" }}>
   <div
     style={{
       background: "white",
@@ -13,6 +16,7 @@ const BookCard = ({ book }) => (
     <p><strong>Author:</strong> {book.author}</p>
     <p><strong>Year:</strong> {book.year}</p>
   </div>
+  </Link>
 );
 
 export default BookCard;

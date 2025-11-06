@@ -5,6 +5,7 @@ import Library from "../pages/Library";
 import AddBook from "../pages/AddBook";
 import EditBook from "../pages/EditBook";
 import NotFound from "../pages/NotFound";
+import BookPage from "../pages/BookPage";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
           <Route index element={<Library />} />
           <Route path="add" element={<AddBook />} />
           <Route path="edit/:id" element={<EditBook />} />
+            <Route path="book/:id" element={<BookPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
