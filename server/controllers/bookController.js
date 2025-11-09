@@ -25,12 +25,12 @@ export const getBookById = async (req, res) => {
 // Add a new book
 export const addBook = async (req, res) => {
   try {
-    const { title, author, year } = req.body;
+    const { title, author, year, description } = req.body;
     if (!title) return res.status(400).json({ error: "Title is required" });
 
     const [result] = await pool.query(
-      "INSERT INTO books (title, author, year) VALUES (?, ?, ?)",
-      [title, author, year]
+      "INSERT INTO books (title, author, year, description) VALUES (?, ?, ?, ?)",
+      [title, author, year, description]
     );
 
     res.json({ id: result.insertId, title, author, year });

@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import bookRoutes from "./routes/bookRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import pool from "./config/db.js";
 
 dotenv.config();
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use("/api/auth", authRoutes)
 app.use("/api/books", bookRoutes);
 
 app.get("/", (req, res) => {

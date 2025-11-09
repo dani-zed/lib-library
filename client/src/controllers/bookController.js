@@ -1,4 +1,4 @@
-import { fetchAllBooks,getBookById } from "../api/booksApi";
+import { addNewBook, fetchAllBooks,getBookById } from "../api/booksApi";
 
 
 export const getAllBooks = async () => {
@@ -17,6 +17,16 @@ export const getBookDetails = async (bookId) => {
     return book;
   } catch (error) {
     console.error(`Error in getBookDetails for ID ${bookId}:`, error);
+    throw error;
+  }
+};
+
+export const addBookController = async (bookData) => {
+  try {
+    const book = await addNewBook(bookData);
+    return book;
+  } catch (error) {
+    console.error("Error in addBookController:", error);
     throw error;
   }
 };

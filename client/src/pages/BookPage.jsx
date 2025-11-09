@@ -11,6 +11,8 @@ const BookPage = () => {
     const fetchBook = async () => {
       try {
         const data = await getBookDetails(id);
+        console.log(data,"bookpage");
+        
         setBook(data);
       } catch (error) {
         console.error("Error fetching book details:", error);
