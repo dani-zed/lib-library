@@ -20,8 +20,8 @@ const Library = () => {
   }, []);
   return (
    <div className="container">
-      <h1>📚 My Library</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+      <h1>📚 ZeD Kindle</h1>
+      <div style={{ display: "grid", gap: "20px" }}>
         {books.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
