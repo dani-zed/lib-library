@@ -17,7 +17,7 @@ export const verifyToken = (req, res, next) => {
 };
 
 // ✅ Allow only admins
-export const isAdmin = (req, res, next) => {
+export const isAuthor = (req, res, next) => {
   if (req.user.role !== "admin")
     return res.status(403).json({ message: "Admin access required" });
   next();

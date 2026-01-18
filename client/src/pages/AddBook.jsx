@@ -4,7 +4,8 @@ import { addBookController } from "../controllers/bookController";
 import useAuth from "../hooks/useAuth";
 
 const AddBook = () => {
-    useAuth(["admin"]); // Only admins
+    // useAuth(["admin"]); // Only admins can access
+    useAuth(["admin"]); // Only admins can access
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -62,6 +63,12 @@ const AddBook = () => {
           name="description"
           placeholder="Description"
           value={formData.description}
+          onChange={handleChange}
+        />
+        <textarea
+          name="content"
+          placeholder="Content"
+          value={formData.content}
           onChange={handleChange}
         />
         <button type="submit" style={{ padding: "10px", cursor: "pointer" }}>

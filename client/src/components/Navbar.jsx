@@ -1,10 +1,9 @@
-
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role"); // set during login
+  const role = localStorage.getItem("role");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -13,32 +12,107 @@ const Navbar = () => {
   };
 
   return (
-      <nav style={{ background: "#333", color: "#fff", padding: "10px" }}>
-        <Link to="/" style={{ color: "#fff", marginRight: "20px" }}>
-          Library
+    <nav
+      style={{
+        background: "#0d0d0d",
+        borderBottom: "1px solid #2a2a2a",
+        padding: "15px 30px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        color: "#fff",
+        fontFamily: "Georgia, serif",
+      }}
+    >
+      {/* Left Section */}
+      <div style={{ display: "flex", alignItems: "center", gap: "25px" }}>
+        <Link
+          to="/"
+          style={{
+            color: "#eaeaea",
+            textDecoration: "none",
+            fontSize: "20px",
+            fontWeight: "bold",
+          }}
+        >
+          ZeD Kindle
         </Link>
 
-        {role === "admin" && (
-          <Link to="/add" style={{ color: "#fff", marginRight: "20px" }}>
-            Add Book
+        {role === "author" && token && (
+          <Link
+            to="/add"
+            style={{
+              color: "#ccc",
+              textDecoration: "none",
+              fontSize: "15px",
+            }}
+          >
+            + Add Book
           </Link>
         )}
+      </div>
 
+      {/* Right Section */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         {!token ? (
           <>
-            <Link to="/login" style={{ color: "#fff", marginRight: "20px" }}>
+            <Link to="/login" style={{ color: "#ccc", textDecoration: "none" }}>
               Login
             </Link>
-            <Link to="/signup" style={{ color: "#fff" }}>
+            <Link to="/signup" style={{ color: "#ccc", textDecoration: "none" }}>
               Signup
             </Link>
           </>
         ) : (
-          <button onClick={handleLogout} style={{ marginLeft: "20px" }}>
-            Logout
-          </button>
+          <>
+            {/* Profile Icon */}
+            <div
+              onClick={() =>
+                navigate(role === "author" ? "/profile" : "/profile")
+              }
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                background: "#1a1a1a",
+                border: "1px solid #444",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#fff",
+                cursor: "pointer",
+                fontSize: "16px",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#222")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#1a1a1a")}
+              title="Profile"
+            >
+              👤
+            </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              style={{
+                background: "#1a1a1a",
+                border: "1px solid #444",
+                padding: "8px 15px",
+                borderRadius: "8px",
+                color: "white",
+                cursor: "pointer",
+                transition: "0.2s",
+                fontFamily: "inherit",
+              }}
+              onMouseEnter={(e) => (e.target.style.background = "#222")}
+              onMouseLeave={(e) => (e.target.style.background = "#1a1a1a")}
+            >
+              Logout
+            </button>
+          </>
         )}
-      </nav>
+      </div>
+    </nav>
   );
 };
 

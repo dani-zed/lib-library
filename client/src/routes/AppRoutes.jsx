@@ -8,6 +8,7 @@ import NotFound from "../pages/NotFound";
 import BookPage from "../pages/BookPage";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import ProfilePage from "../pages/ProfilePage";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
             <Route path="book/:id" element={<BookPage />} />
             <Route path="login" element={<Login />} />
             <Route path="Signup" element={<Signup />} />
+            <Route path="profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

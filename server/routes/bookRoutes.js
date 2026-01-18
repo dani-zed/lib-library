@@ -1,12 +1,12 @@
 import express from "express";
 import { getBooks, addBook, deleteBook, getBookById } from "../controllers/bookController.js";
-import { verifyToken,isAdmin } from "../auth/authMiddleware.js";
+import { verifyToken,isAuthor } from "../auth/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", getBooks);
 router.get("/:id", getBookById);
-router.post("/", verifyToken,isAdmin,addBook);
-router.delete("/:id", verifyToken,isAdmin,deleteBook);
+router.post("/", verifyToken,isAuthor,addBook);
+router.delete("/:id", verifyToken,isAuthor,deleteBook);
 
 export default router;
