@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import PasswordModal from "../model/PasswordModel";
+import { deleteBookController } from "../controllers/bookController";
 
 const ProfilePage = () => {
     const getBooksByAuthorUrl = "http://localhost:5001/api/books/author/";
   const username = localStorage.getItem("username");
   const userId = localStorage.getItem("userId");
   const role = localStorage.getItem("role");
-
-  const [books, setBooks] = React.useState([]);
+const [showPasswordModal, setShowPasswordModal] = useState(false);
+const [selectedBookId, setSelectedBookId] = useState(null);
+  const [books, setBooks] = useState([]);
   const fetchBooksByAuthor = async () => {
     try {
         
@@ -25,7 +28,23 @@ const ProfilePage = () => {
     if (role === "author") {
       fetchBooksByAuthor();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [role]);
+  const handleDeleteClick = (bookId) => {
+  setSelectedBookId(bookId);
+  setShowPasswordModal(true);
+};
+const confirmDelete = async () => {
+  try {
+    await deleteBookController(selectedBookId);
+    alert("Book deleted!");
+    setShowPasswordModal(false);
+    await fetchBooksByAuthor(); // refresh list
+  } catch (err) {
+    alert("Failed to delete book.");
+    console.error(err);
+  }
+};
   return (
     <div
       style={{
@@ -128,16 +147,22 @@ const ProfilePage = () => {
                         ✏ Edit
                       </a>
 
-                      <a
-                        href={`/delete/${book.id}`}
+                      <button
+                       onClick={()=>{handleDeleteClick(book.id)}}
                         style={{
                           color: "salmon",
                           textDecoration: "underline",
                         }}
                       >
                         🗑 Delete
-                      </a>
+                      </button>
                     </div>
+                    {showPasswordModal && (
+  <PasswordModal
+    onClose={() => setShowPasswordModal(false)}
+    onSuccess={confirmDelete}
+  />
+)}
                   </div>
                 ))
               )}

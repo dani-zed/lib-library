@@ -31,10 +31,34 @@ const AddBook = () => {
     }
   };
 
-  return (
-    <div className="container">
-      <h1>Add New Book</h1>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "400px" }}>
+ return (
+  <div
+    style={{
+      background: "rgb(13, 13, 13)",
+      minHeight: "100vh",
+      padding: "40px 20px",
+      fontFamily: "'Georgia', serif",
+      color: "#e6e2d9",
+      display: "flex",
+      justifyContent: "center",
+    }}
+  >
+    <div
+      style={{
+        background: "#2a2a2a",
+        padding: "30px",
+        borderRadius: "12px",
+        width: "100%",
+        maxWidth: "600px",
+        boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+      }}
+    >
+      <h2 style={{ marginBottom: "25px", textAlign: "center" }}>➕ Add New Book</h2>
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+      >
         <input
           type="text"
           name="title"
@@ -42,7 +66,15 @@ const AddBook = () => {
           value={formData.title}
           onChange={handleChange}
           required
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #4a4a4a",
+            background: "#3a3a3a",
+            color: "#e6e2d9",
+          }}
         />
+
         <input
           type="text"
           name="author"
@@ -50,7 +82,15 @@ const AddBook = () => {
           value={formData.author}
           onChange={handleChange}
           required
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #4a4a4a",
+            background: "#3a3a3a",
+            color: "#e6e2d9",
+          }}
         />
+
         <input
           type="number"
           name="year"
@@ -58,25 +98,64 @@ const AddBook = () => {
           value={formData.year}
           onChange={handleChange}
           required
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #4a4a4a",
+            background: "#3a3a3a",
+            color: "#e6e2d9",
+          }}
         />
+
         <textarea
           name="description"
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
+          rows="3"
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #4a4a4a",
+            background: "#3a3a3a",
+            color: "#e6e2d9",
+          }}
         />
+
         <textarea
           name="content"
           placeholder="Content"
           value={formData.content}
           onChange={handleChange}
+          rows="6"
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #4a4a4a",
+            background: "#3a3a3a",
+            color: "#e6e2d9",
+          }}
         />
-        <button type="submit" style={{ padding: "10px", cursor: "pointer" }}>
-          Add Book
+
+        <button
+          type="submit"
+          style={{
+            marginTop: "10px",
+            padding: "12px",
+            borderRadius: "8px",
+            background: "#444",
+            border: "1px solid #666",
+            color: "#e6e2d9",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          ✔ Add Book
         </button>
       </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default AddBook;

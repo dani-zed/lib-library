@@ -27,7 +27,7 @@ export const addNewBook = async (bookData) => {
   try {
     const userId = localStorage.getItem("userId");
     bookData.author_id = userId; // Attach author_id to bookData
-    console.log("authorid",bookData.author_id);
+ 
     
     const token = localStorage.getItem("token");
     const response = await axios.post(API_BASE_URL, bookData, {
@@ -57,6 +57,23 @@ export const updateBook = async (bookId, updatedData) => {
   }
 };
 
+export const verifyPassword = async (password) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `${API_BASE_URL}/verify-password`,
+      { password },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error verifying password:', error);
+    throw error;
+  }
+};
 export const deleteBook = async (bookId) => {
   try {
     const token = localStorage.getItem("token");
