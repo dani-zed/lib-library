@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 const AddBook = () => {
     // useAuth(["admin"]); // Only admins can access
-    useAuth(["admin"]); // Only admins can access
+    useAuth(["author"]); // Only authors can access
   const [formData, setFormData] = useState({
     title: "",
     author: "",

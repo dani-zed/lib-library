@@ -25,7 +25,16 @@ export const getBookById = async (bookId) => {
 
 export const addNewBook = async (bookData) => {
   try {
-    const response = await axios.post(API_BASE_URL, bookData);
+    const userId = localStorage.getItem("userId");
+    bookData.author_id = userId; // Attach author_id to bookData
+    console.log("authorid",bookData.author_id);
+    
+    const token = localStorage.getItem("token");
+    const response = await axios.post(API_BASE_URL, bookData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error adding new book:', error);
@@ -35,7 +44,12 @@ export const addNewBook = async (bookData) => {
 
 export const updateBook = async (bookId, updatedData) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/${bookId}`, updatedData);
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`${API_BASE_URL}/${bookId}`, updatedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error updating book with ID ${bookId}:`, error);
@@ -45,7 +59,12 @@ export const updateBook = async (bookId, updatedData) => {
 
 export const deleteBook = async (bookId) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/${bookId}`);
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(`${API_BASE_URL}/${bookId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error deleting book with ID ${bookId}:`, error);

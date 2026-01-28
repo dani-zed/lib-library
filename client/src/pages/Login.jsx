@@ -16,9 +16,11 @@ const Login = () => {
         username,
         password,
       });
-
+      console.log("data",data);
+      
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
+      localStorage.setItem("userId", data.userId);
       localStorage.setItem("username", data.username);
       alert("Login successful!");
       navigate("/");

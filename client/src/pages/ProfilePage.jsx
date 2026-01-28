@@ -1,9 +1,31 @@
 import React from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 const ProfilePage = () => {
+    const getBooksByAuthorUrl = "http://localhost:5001/api/books/author/";
   const username = localStorage.getItem("username");
+  const userId = localStorage.getItem("userId");
   const role = localStorage.getItem("role");
 
+  const [books, setBooks] = React.useState([]);
+  const fetchBooksByAuthor = async () => {
+    try {
+        
+      const res = await axios.get(`${getBooksByAuthorUrl}${userId}`);
+      console.log("booksbyauthor", res.data);
+      
+      setBooks(res.data);
+    } catch (err) {
+      console.error("Error fetching author books:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (role === "author") {
+      fetchBooksByAuthor();
+    }
+  }, [role]);
   return (
     <div
       style={{
@@ -77,14 +99,53 @@ const ProfilePage = () => {
                 ➕ Add New Book
               </a>
             </div>
+           <div style={{ marginTop: "30px" }}>
+              {books.length === 0 ? (
+                <p style={{ opacity: 0.7 }}>No books published yet.</p>
+              ) : (
+                books.map((book) => (
+                  <div
+                    key={book.id}
+                    style={{
+                      padding: "15px",
+                      marginBottom: "15px",
+                      background: "#3a3a3a",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <h3>{book.title}</h3>
+                    <p style={{ opacity: 0.7 }}>{book.description}</p>
+
+                    <div style={{ marginTop: "10px" }}>
+                      <a
+                        href={`/edit/${book.id}`}
+                        style={{
+                          marginRight: "10px",
+                          color: "#9cccff",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        ✏ Edit
+                      </a>
+
+                      <a
+                        href={`/delete/${book.id}`}
+                        style={{
+                          color: "salmon",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        🗑 Delete
+                      </a>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </>
         ) : (
           <>
-            <h2 style={{ marginBottom: "10px", fontSize: "22px" }}>Your Reading Library</h2>
-            <p style={{ opacity: 0.75 }}>
-              View and continue reading your saved books.
-            </p>
-
+            <h2 style={{ fontSize: "22px" }}>Your Reading Library</h2>
             <div style={{ marginTop: "20px" }}>
               <a
                 href="/my-library"

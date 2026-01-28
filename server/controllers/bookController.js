@@ -9,9 +9,25 @@ export const getBooks = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+export const getBookByAuthor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id from params",id);
+
+    const [rows] = await pool.query("SELECT * FROM books WHERE authorId = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 export const getBookById = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("id from params",id);
+
     const [rows] = await pool.query("SELECT * FROM books WHERE id = ?", [id]);
     if (rows.length === 0) {
       return res.status(404).json({ error: "Book not found" });
@@ -25,12 +41,12 @@ export const getBookById = async (req, res) => {
 // Add a new book
 export const addBook = async (req, res) => {
   try {
-    const { title, author, year, description ,content} = req.body;
+    const { title, author, year, description ,content, author_id} = req.body;
     if (!title) return res.status(400).json({ error: "Title is required" });
 
     const [result] = await pool.query(
-      "INSERT INTO books (title, author, year, description, content) VALUES (?, ?, ?, ?, ?)",
-      [title, author, year, description,content]
+      "INSERT INTO books (title, author, year, description, content, authorId) VALUES (?, ?, ?, ?, ?, ?)",
+      [title, author, year, description,content,author_id]
     );
 
     res.json({ id: result.insertId, title, author, year });
