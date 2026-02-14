@@ -88,6 +88,46 @@ export const deleteBook = async (bookId) => {
     throw error;
   }
 };
+export const addToFavorites = async (bookId) => {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(
+    `${API_BASE_URL}/add-favorite`,
+    { bookId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return response.data;
+};
+export const getFavorites = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.get(
+    `${API_BASE_URL}/favorites`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+console.log("apiii react");
+
+console.log("response",response);
+
+  return response.data;
+};
+export const deleteFromFavorites = async (bookId) => {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.delete(
+    `${API_BASE_URL}/favorites/${bookId}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  return response.data;
+};
 
 export const searchBooks = async (query) => {
   try {

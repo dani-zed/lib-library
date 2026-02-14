@@ -9,7 +9,9 @@ const DeleteConfirmationModal = ({ show, onConfirm, onCancel }) => {
     <div style={overlay}>
       <div style={card}>
         <h3 style={{ color: "#ff4d4d" }}>Delete Book?</h3>
-        <p style={{ opacity: 0.8 }}>Enter your password to confirm deletion</p>
+        <p style={{ opacity: 0.8 }}>
+          Enter your password to confirm deletion
+        </p>
 
         <input
           type="password"
@@ -19,9 +21,20 @@ const DeleteConfirmationModal = ({ show, onConfirm, onCancel }) => {
           style={inputStyle}
         />
 
-        <div style={{ marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center" }}>
-          <button style={cancelBtn} onClick={onCancel}>Cancel</button>
-          <button style={deleteBtn} onClick={() => onConfirm(password)}>Delete</button>
+        <div
+          style={{
+            marginTop: "15px",
+            display: "flex",
+            gap: "10px",
+            justifyContent: "center",
+          }}
+        >
+          <button style={cancelBtn} onClick={onCancel}>
+            Cancel
+          </button>
+          <button style={deleteBtn} onClick={() => onConfirm(password)}>
+            Delete
+          </button>
         </div>
       </div>
     </div>

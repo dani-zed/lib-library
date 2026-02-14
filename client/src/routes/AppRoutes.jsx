@@ -9,6 +9,7 @@ import BookPage from "../pages/BookPage";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ProfilePage from "../pages/ProfilePage";
+import MyLibrary from "../pages/MyLibrary";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const AppRoutes = () => {
           <Route path="add" element={<AddBook />} />
           <Route path="edit/:id" element={<EditBook />} />
             <Route path="book/:id" element={<BookPage />} />
+            <Route path="my-library" element={<MyLibrary/>} />
             <Route path="login" element={<Login />} />
             <Route path="Signup" element={<Signup />} />
             <Route path="profile" element={<ProfilePage />} />

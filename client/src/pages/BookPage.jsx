@@ -1,17 +1,21 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getBookDetails } from "../controllers/bookController";
+import { addToFavorites,getFavorites,deleteFromFavorites } from "../api/booksApi";
+import MessageModal from "../model/MessageModal";
 
 const BookPage = () => {
   const { id } = useParams(); // get book id from URL
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [toast, setToast] = useState(null);
+
   useEffect(() => {
     const fetchBook = async () => {
       try {
         const data = await getBookDetails(id);
-        console.log(data,"bookpage");
         
         setBook(data);
       } catch (error) {
@@ -24,6 +28,35 @@ const BookPage = () => {
     fetchBook();
   }, [id]); // ✅ run once when id changes
 
+  // Check if this book is in user's favorites
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const favs = await getFavorites();
+        const exists = favs.some((b) => b.id === book.id);
+        setIsFavorite(exists);
+      } catch (err) {
+        console.error("Error loading favs:", err);
+      }
+    };
+    loadFavorites();
+  }, [book?.id]);
+  // Toggle favorite status
+const toggleFavorite = async () => {
+  try {
+    if (isFavorite) {
+      await deleteFromFavorites(book.id);
+      setIsFavorite(false);
+      setToast({ message: "Removed from favourites", type: "error" });
+    } else {
+      await addToFavorites(book.id);
+      setIsFavorite(true);
+      setToast({ message: "Added to favourites ❤️", type: "success" });
+    }
+  } catch (err) {
+    setToast({ message: "Error updating favourites!", type: "error" });
+  }
+};
   if (loading) return <div>Loading book details...</div>;
   if (!book) return <div>Book not found!</div>;
 
@@ -50,6 +83,22 @@ const BookPage = () => {
         lineHeight: "1.6",
       }}
     >
+      {/* add to favorites button here in future */}
+  <button
+      onClick={toggleFavorite}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        fontSize: "28px",
+        marginBottom: "10px",
+        color: isFavorite ? "#ff4d4d" : "#888", // filled red OR grey outline
+        transition: "0.2s",
+      }}
+    >
+      {isFavorite ? "❤️" : "🤍"}
+    </button>
+
       <h1 style={{ marginBottom: "10px", fontSize: "32px" }}>{book.title}</h1>
 
       <p style={{ margin: "5px 0", fontSize: "18px" }}>
@@ -79,6 +128,13 @@ const BookPage = () => {
         <p style={{ opacity: 0.9 }}>{book.content}</p>
       </div>
     </div>
+    {toast && (
+  <MessageModal
+    message={toast.message}
+    type={toast.type}
+    onClose={() => setToast(null)}
+  />
+)}
   </div>
 );
 };

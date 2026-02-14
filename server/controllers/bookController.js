@@ -92,3 +92,58 @@ export const deleteBook = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+export const addFavorite = async (req, res) => {
+  console.log("userid",req.user.id);
+  
+  const userId = req.user.id;
+  const { bookId } = req.body;
+
+  try {
+    await pool.query(
+      "INSERT INTO favorites (userId, bookId) VALUES (?, ?)",
+      [userId, bookId]
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+export const getUserFavorites = async (req, res) => {
+  console.log("hiiii");
+  
+  const userId = req.user.id;
+console.log(userId);
+
+  try {
+    const [rows] = await pool.query(
+      `SELECT books.* 
+       FROM books
+       JOIN favorites ON favorites.bookId = books.id
+       WHERE favorites.userId = ?`,
+      [userId]
+    );
+console.log(rows);
+
+    res.json(rows);  // returns array of books
+  } catch (err) {
+    console.log("err in mbackend fav ",err.message);
+    
+    res.status(500).json({ error: err.message });
+  }
+};
+export const deleteFavorite = async (req, res) => {
+  const userId = req.user.id;
+  const { bookId } = req.params;
+
+  try {
+    await pool.query(
+      "DELETE FROM favorites WHERE userId = ? AND bookId = ?",
+      [userId, bookId]
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

@@ -1,16 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import LoadingModal from "../model/LoadingModal";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  };
 
+const handleLogout = () => {
+  setLoading(true);
+  setTimeout(() => {
+    localStorage.clear();
+    navigate("/login");
+    setLoading(false);
+  }, 800); // smooth fade
+};
   return (
     <nav
       style={{
@@ -112,6 +118,7 @@ const Navbar = () => {
           </>
         )}
       </div>
+      <LoadingModal show={loading} text="Logging out..." />
     </nav>
   );
 };

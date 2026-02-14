@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import PasswordModal from "../model/PasswordModel";
 import { deleteBookController } from "../controllers/bookController";
+import DeleteConfirmationModal from "../model/DeleteConfirmatioinModal";
 
 const ProfilePage = () => {
     const getBooksByAuthorUrl = "http://localhost:5001/api/books/author/";
@@ -89,7 +89,7 @@ const confirmDelete = async () => {
           </h1>
 
           <p style={{ fontSize: "18px", opacity: 0.8 }}>
-            Role: <b>{role}</b>
+            <b>{role === "user" ? "Reader" : "Publisher"}</b>
           </p>
         </div>
 
@@ -157,12 +157,11 @@ const confirmDelete = async () => {
                         🗑 Delete
                       </button>
                     </div>
-                    {showPasswordModal && (
-  <PasswordModal
-    onClose={() => setShowPasswordModal(false)}
-    onSuccess={confirmDelete}
-  />
-)}
+                    <DeleteConfirmationModal
+  show={showPasswordModal}
+  onCancel={() => setShowPasswordModal(false)}
+  onConfirm={confirmDelete}
+/>
                   </div>
                 ))
               )}
@@ -170,7 +169,7 @@ const confirmDelete = async () => {
           </>
         ) : (
           <>
-            <h2 style={{ fontSize: "22px" }}>Your Reading Library</h2>
+            <h2 style={{ fontSize: "22px" }}>Your Favourites</h2>
             <div style={{ marginTop: "20px" }}>
               <a
                 href="/my-library"
