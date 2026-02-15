@@ -110,10 +110,7 @@ export const addFavorite = async (req, res) => {
   }
 };
 export const getUserFavorites = async (req, res) => {
-  console.log("hiiii");
-  
   const userId = req.user.id;
-console.log(userId);
 
   try {
     const [rows] = await pool.query(
@@ -123,7 +120,6 @@ console.log(userId);
        WHERE favorites.userId = ?`,
       [userId]
     );
-console.log(rows);
 
     res.json(rows);  // returns array of books
   } catch (err) {

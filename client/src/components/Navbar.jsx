@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LoadingModal from "../model/LoadingModal";
+import { useMusic } from "../context/MusicContext";
 
 const Navbar = () => {
+  const { toggleMusic, isPlaying } = useMusic();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
@@ -20,6 +22,11 @@ const handleLogout = () => {
   return (
     <nav
       style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
         background: "#0d0d0d",
         borderBottom: "1px solid #2a2a2a",
         padding: "15px 30px",
@@ -43,7 +50,18 @@ const handleLogout = () => {
         >
           ZeD Kindle
         </Link>
-
+    <button
+        onClick={toggleMusic}
+        style={{
+          background: "none",
+          border: "none",
+          fontSize: "20px",
+          cursor: "pointer",
+          color: "white"
+        }}
+      >
+        {isPlaying ? "🔊" : "🔇"}
+      </button>
         {role === "author" && token && (
           <Link
             to="/add"

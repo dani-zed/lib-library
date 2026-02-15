@@ -1,5 +1,7 @@
 
+import { useNavigate } from "react-router-dom";
 const BookCard = ({ book }) => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -16,6 +18,7 @@ const BookCard = ({ book }) => {
         e.currentTarget.style.transform = "scale(1.03)";
         e.currentTarget.style.boxShadow = "0 0 18px rgba(255,255,255,0.08)";
       }}
+        onClick={() => navigate(`/book/${book.id}`)}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "scale(1)";
         e.currentTarget.style.boxShadow = "0 0 12px rgba(0,0,0,0.4)";
@@ -74,7 +77,7 @@ const BookCard = ({ book }) => {
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#444")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "#333")}
-        onClick={() => (window.location.href = `/book/${book.id}`)}
+        onClick={() => navigate(`/book/${book.id}`)}
       >
         Open Book →
       </button>

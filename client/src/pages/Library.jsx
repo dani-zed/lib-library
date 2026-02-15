@@ -9,7 +9,6 @@ const Library = () => {
     const fetchBooks = async () => {
       try {
         const data = await getAllBooks();
-        console.log(data);
         
         setBooks(data);
       } catch (error) {
