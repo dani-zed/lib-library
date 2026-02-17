@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getBookDetails } from "../controllers/bookController";
 import { addToFavorites,getFavorites,deleteFromFavorites } from "../api/booksApi";
 import MessageModal from "../model/MessageModal";
+import { IoHeartOutline,IoHeartSharp  } from "react-icons/io5";
 
 const BookPage = () => {
   const isLoggedIn = !!localStorage.getItem("token");
@@ -10,10 +11,9 @@ const BookPage = () => {
   const { id } = useParams(); // get book id from URL
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  
   const [isFavorite, setIsFavorite] = useState(false);
   const [toast, setToast] = useState(null);
-
+  const [hasProgress, setHasProgress] = useState(false);
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -29,8 +29,13 @@ const BookPage = () => {
 
     fetchBook();
   }, [id]); // ✅ run once when id changes
-
-  // Check if this book is in user's favorites
+  useEffect(() => {
+    const savedScroll = localStorage.getItem(`book-progress-${book?.id}`);
+    if (savedScroll && parseInt(savedScroll, 10) > 50) {
+    setHasProgress(true);
+  }
+    }, [book?.id]);
+ // Check if this book is in user's favorites
   useEffect(() => {
     if (!isLoggedIn || !book?.id) return;
     const loadFavorites = async () => {
@@ -103,9 +108,8 @@ const toggleFavorite = async () => {
         transition: "0.2s",
       }}
     >
-      {isFavorite ? "❤️" : "🤍"}
+      {!isFavorite ? <IoHeartOutline size={28} /> : <IoHeartSharp size={28} color="#ff4d4d" />}
     </button>
-
       <h1 style={{ marginBottom: "10px", fontSize: "32px" }}>{book.title}</h1>
 
       <p style={{ margin: "5px 0", fontSize: "18px" }}>
@@ -175,7 +179,7 @@ const toggleFavorite = async () => {
       e.currentTarget.style.transform = "translateY(0px)";
     }}
   >
-    📖 Read Book
+    {hasProgress ? "Continue Reading 📖" : "Start Reading 📖"}
   </div>
 
   {/* Floating parchment animation */}
