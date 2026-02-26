@@ -68,7 +68,7 @@ const Login = () => {
             color: "#f1f1f1",
           }}
         >
-          🔐 Login
+          Login
         </h2>
 
         {/* Username Input */}
@@ -79,6 +79,7 @@ const Login = () => {
           required
           style={{
             width: "100%",
+            boxSizing: "border-box",
             padding: "12px",
             marginBottom: "15px",
             borderRadius: "10px",
@@ -101,6 +102,7 @@ const Login = () => {
           required
           style={{
             width: "100%",
+            boxSizing: "border-box",
             padding: "12px",
             marginBottom: "20px",
             borderRadius: "10px",
@@ -118,6 +120,7 @@ const Login = () => {
           type="submit"
           style={{
             width: "100%",
+            boxSizing: "border-box",
             padding: "12px",
             borderRadius: "10px",
             border: "none",

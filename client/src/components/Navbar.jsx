@@ -48,7 +48,7 @@ const handleLogout = () => {
             fontWeight: "bold",
           }}
         >
-          ZeD Kindle
+          Chamber
         </Link>
     <button
         onClick={toggleMusic}

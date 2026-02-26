@@ -13,7 +13,7 @@ export const MusicProvider = ({ children }) => {
   useEffect(() => {
     // create AUDIO only once
     if (!audioRef.current) {
-      audioRef.current = new Audio("/music/andro.mp3");
+      audioRef.current = new Audio("/music/storm.mp3");
       audioRef.current.loop = true;
       audioRef.current.volume = 0.4;
     }

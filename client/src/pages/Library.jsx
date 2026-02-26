@@ -29,13 +29,15 @@ const Library = () => {
   >
     <h1
       style={{
+        fontFamily:"fantasy",
         textAlign: "center",
+        paddingTop: "30px",
         marginBottom: "40px",
         fontSize: "42px",
         letterSpacing: "2px",
       }}
     >
-      📚 ZeD Kindle Library
+      Chamber of Stories
     </h1>
 
     <div

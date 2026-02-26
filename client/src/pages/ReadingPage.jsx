@@ -63,7 +63,7 @@ const ReadingPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          fontFamily: "Georgia, serif",
+          fontFamily: "fantasy",
         }}
       >
         Book not found.
@@ -76,7 +76,7 @@ const ReadingPage = () => {
         minHeight: "100vh",
         background: "#0b0b0b",
         color: "#e6e2d9",
-        fontFamily: "Georgia, serif",
+        fontFamily: "fantasy",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

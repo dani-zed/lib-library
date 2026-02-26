@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { getFavorites } from "../api/booksApi";
 import { deleteBookController } from "../controllers/bookController";
 import DeleteConfirmationModal from "../model/DeleteConfirmatioinModal";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,16 @@ const ProfilePage = () => {
       fetchBooksByAuthor();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    else if (role === "user") {
+      getFavorites()
+        .then((data) => {
+          setBooks(data);
+        })
+        .catch((err) => {
+          console.error("Error fetching favorites:", err);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [role]);
   const handleDeleteClick = (bookId) => {
     setSelectedBookId(bookId);
@@ -51,7 +62,7 @@ const ProfilePage = () => {
         background: "rgb(13, 13, 13)", // Kindle dark mode background
         minHeight: "100vh",
         padding: "40px 20px",
-        paddingTop:"120px",
+        paddingTop: "120px",
         fontFamily: "'Georgia', serif",
         color: "#e6e2d9", // warm off-white
       }}
@@ -177,7 +188,40 @@ const ProfilePage = () => {
         ) : (
           <>
             <h2 style={{ fontSize: "22px" }}>Your Favourites</h2>
-            <div style={{ marginTop: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: "15px",
+                marginTop: "20px",
+              }}
+            >
+              {books.length === 0 ? (
+                <p style={{ opacity: 0.7 }}>
+                  You haven’t added any favorites yet.
+                </p>
+              ) : (
+                books.slice(0,3).map((book) => (
+                  <div
+                    key={book.id}
+                    style={{
+                      padding: "15px",
+                      background: "#3a3a3a",
+                      borderRadius: "8px",
+                      flex: "1 1 180px", // 🔥 responsive same-width cards
+                      maxWidth: "220px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate(`/book/${book.id}`)}
+                  >
+                    <h3>{book.title}</h3>
+                    <p style={{ opacity: 0.7 }}>{book.author}</p>
+                  </div>
+                ))
+              )}
+            </div>
+            <div style={{ marginTop: "30px", textAlign: "center" }}>
               <button
                 onClick={() => navigate("/my-library")}
                 style={{
@@ -193,9 +237,11 @@ const ProfilePage = () => {
                   fontFamily: "inherit",
                 }}
               >
-                📖 View My Library
+                📖 View All
               </button>
             </div>
+            <h2>Continue Reading</h2>
+            <div>will have to add this feature later</div>
           </>
         )}
       </div>

@@ -37,12 +37,12 @@ const BookCard = ({ book }) => {
       </h2>
 
       {/* Author */}
-      <p style={{ margin: "0", opacity: 0.8, fontSize: "15px" }}>
+      <p style={{ margin: "0", opacity: 0.8, fontSize: "16px" }}>
         {book.author}
       </p>
 
       {/* Year */}
-      <p style={{ margin: "6px 0 0 0", opacity: 0.7, fontSize: "14px" }}>
+      <p style={{ margin: "6px 0 0 0", opacity: 0.7, fontSize: "15px" }}>
         {book.year}
       </p>
 
